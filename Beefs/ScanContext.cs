@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Beefs
+{
+    public class ScanContext
+    {
+        public readonly List<Task> tasks;
+        public readonly Dictionary<Need, double> prices;
+    }
+}
