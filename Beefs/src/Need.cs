@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Beefs
 {
-    public interface Need
+    public class Need
     {
     }
 }
