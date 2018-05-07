@@ -8,7 +8,13 @@ namespace Beefs
 {
     public class ScanContext
     {
-        public readonly List<Task> tasks;
-        public readonly Dictionary<Need, double> prices;
+        public readonly IReadOnlyList<Task> tasks;
+        public readonly IReadOnlyDictionary<Need, double> prices;
+
+        public ScanContext(IReadOnlyList<Task> tasks, IReadOnlyDictionary<Need, double> prices)
+        {
+            this.tasks = tasks;
+            this.prices = prices;
+        }
     }
 }

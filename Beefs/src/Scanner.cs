@@ -14,7 +14,7 @@ namespace Beefs
             List<Need> needs = new List<Need>();
             needs.Add(terminalNeed);
             ScanNode terminator = new ScanNode(new Task("terminator", needs, new Dictionary<Pos, double>(), new Dictionary<Need, double>()), 0, new Dictionary<Pos, double>());
-            SortedSet<ScanNode> nodes = new SortedSet<ScanNode>();
+            SortedSet<ScanNode> nodes = new SortedSet<ScanNode>(new ScanNode.ScanNodeComparer());
             nodes.Add(terminator);
 
             while(nodes.Count > 0)
@@ -24,7 +24,7 @@ namespace Beefs
 
                 foreach (Need successorNeed in successor.task.needs)
                 {
-                    foreach(var task in context.tasks.Where(task => task.needs.Contains(successorNeed)))
+                    foreach(var task in context.tasks.Where(task => task.outcomes.ContainsKey(successorNeed)))
                     {
                         ScanNode candidate = new ScanNode(task, successor.costOf(task) + successor.cost, successor.updatePositions(task));
                         if (candidate.task.needs.Count == 0)
