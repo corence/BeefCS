@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Beefs
+namespace Beefs.games
 {
     public class TheSims
     {
@@ -26,7 +26,7 @@ namespace Beefs
             {
                 { food, 4 }
             };
-            Dictionary<Need, double> purchases = new Dictionary<Need, double>();
+            Dictionary<Need, double> charges = new Dictionary<Need, double>();
             Dictionary<Need, double> positions = new Dictionary<Need, double>
             {
                 { TheSims.x, x },
@@ -36,7 +36,7 @@ namespace Beefs
             {
                 { social, 4 }
             };
-            return new Task("serve dinner", needs, purchases, positions, outcomes);
+            return new Task("serve dinner", needs, charges, positions, outcomes);
         }
 
         public Task BakeFood(double x, double z)
@@ -45,7 +45,7 @@ namespace Beefs
             {
                 { choppedIngredients, 1 }
             };
-            Dictionary<Need, double> purchases = new Dictionary<Need, double>();
+            Dictionary<Need, double> charges = new Dictionary<Need, double>();
             Dictionary<Need, double> positions = new Dictionary<Need, double>
             {
                 { TheSims.x, x },
@@ -55,7 +55,7 @@ namespace Beefs
             {
                 { food, 1 }
             };
-            return new Task("bake food", needs, purchases, positions, outcomes);
+            return new Task("bake food", needs, charges, positions, outcomes);
         }
 
         public Task ChopIngredients(double x, double z)
@@ -64,7 +64,7 @@ namespace Beefs
             {
                 { rawIngredients, 1 }
             };
-            Dictionary<Need, double> purchases = new Dictionary<Need, double>();
+            Dictionary<Need, double> charges = new Dictionary<Need, double>();
             Dictionary<Need, double> positions = new Dictionary<Need, double>
             {
                 { TheSims.x, x },
@@ -74,13 +74,13 @@ namespace Beefs
             {
                 { choppedIngredients, 1 }
             };
-            return new Task("chop ingredients", needs, purchases, positions, outcomes);
+            return new Task("chop ingredients", needs, charges, positions, outcomes);
         }
 
         public Task BuyIngredients(double x, double z)
         {
             Dictionary<Need, double> needs = new Dictionary<Need, double>();
-            Dictionary<Need, double> purchases = new Dictionary<Need, double>
+            Dictionary<Need, double> charges = new Dictionary<Need, double>
             {
                 { cash, 1 }
             };
@@ -93,7 +93,7 @@ namespace Beefs
             {
                 { rawIngredients, 1 }
             };
-            return new Task("buy ingredients", needs, purchases, positions, outcomes);
+            return new Task("buy ingredients", needs, charges, positions, outcomes);
         }
     }
 }

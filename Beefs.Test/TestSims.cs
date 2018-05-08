@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Beefs;
 using Shouldly;
 
-namespace Beefs
+namespace Beefs.games
 {
     [TestFixture]
     public class TestSims
@@ -32,12 +32,12 @@ namespace Beefs
 
             ScanContext context = new ScanContext(tasks, prices, repositioners);
 
-            ScanNode result = new Scanner().Scan(context, TheSims.social, new Dictionary<Need, double> { { TheSims.x, 0 } } );
+            ScanNode result = new Scanner().Scan(context, TheSims.social, new Dictionary<Need, double> { { TheSims.x, 0 } });
 
             result.ShouldNotBeNull();
             result.task.name.ShouldBe("buy ingredients");
-            double moveCost = (4 + 4 + 3 + 6) * 1.0;
-            double cashCost = 1 * 8.0;
+            double moveCost = (4 + 4 + 3 + 6) * 1.0; // the dude starts at x position 0 then moves from there
+            double cashCost = 1 * 8.0; // this is built in to "buy ingredients" task
             result.cost.ShouldBe(moveCost + cashCost);
         }
     }
