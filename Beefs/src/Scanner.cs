@@ -11,9 +11,9 @@ namespace Beefs
         public ScanNode Scan(ScanContext context, Need terminalNeed)
         {
             // Initialise our scan with a terminal node
-            List<Need> needs = new List<Need>();
-            needs.Add(terminalNeed);
-            ScanNode terminator = new ScanNode(new Task("terminator", needs, new Dictionary<Pos, double>(), new Dictionary<Need, double>()), 0, new Dictionary<Pos, double>());
+            Dictionary<Need, double> needs = new Dictionary<Need, double>()
+            { { terminalNeed, 1 } };
+            ScanNode terminator = new ScanNode(new Task("terminator", needs, new Dictionary<Need, double>(), new Dictionary<Need, double>()), 0, new Dictionary<Need, double>());
             SortedSet<ScanNode> nodes = new SortedSet<ScanNode>(new ScanNode.ScanNodeComparer());
             nodes.Add(terminator);
 
@@ -22,8 +22,13 @@ namespace Beefs
                 ScanNode successor = nodes.First();
                 nodes.Remove(successor);
 
-                foreach (Need successorNeed in successor.task.needs)
+                foreach (var needEntry in successor.task.needs)
                 {
+                    if (needEntry.Value <= 0)
+                    {
+                        continue;
+                    }
+                    Need successorNeed = needEntry.Key;
                     foreach(var task in context.tasks.Where(task => task.outcomes.ContainsKey(successorNeed)))
                     {
                         ScanNode candidate = new ScanNode(task, context.costToMove(successor.positions, task.positions) + successor.cost, successor.updatePositions(task.positions));

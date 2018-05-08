@@ -16,16 +16,16 @@ namespace Beefs
         public static readonly Item food = new Item();
         public static readonly Item choppedIngredients = new Item();
         public static readonly Item rawIngredients = new Item();
-        public static readonly Pos x = new Pos();
-        public static readonly Pos z = new Pos();
+        public static readonly Need x = new Need();
+        public static readonly Need z = new Need();
 
         public Task ServeDinner(double x, double z)
         {
-            List<Need> needs = new List<Need>
+            Dictionary<Need, double> needs = new Dictionary<Need, double>
             {
-                food
+                { food, 4 }
             };
-            Dictionary<Pos, double> positions = new Dictionary<Pos, double>
+            Dictionary<Need, double> positions = new Dictionary<Need, double>
             {
                 { TheSims.x, x },
                 { TheSims.z, z }
@@ -39,11 +39,11 @@ namespace Beefs
 
         public Task BakeFood(double x, double z)
         {
-            List<Need> needs = new List<Need>
+            Dictionary<Need, double> needs = new Dictionary<Need, double>
             {
-                choppedIngredients
+                { choppedIngredients, 1 }
             };
-            Dictionary<Pos, double> positions = new Dictionary<Pos, double>
+            Dictionary<Need, double> positions = new Dictionary<Need, double>
             {
                 { TheSims.x, x },
                 { TheSims.z, z }
@@ -57,11 +57,11 @@ namespace Beefs
 
         public Task ChopIngredients(double x, double z)
         {
-            List<Need> needs = new List<Need>
+            Dictionary<Need, double> needs = new Dictionary<Need, double>
             {
-                rawIngredients
+                { rawIngredients, 1 }
             };
-            Dictionary<Pos, double> positions = new Dictionary<Pos, double>
+            Dictionary<Need, double> positions = new Dictionary<Need, double>
             {
                 { TheSims.x, x },
                 { TheSims.z, z }

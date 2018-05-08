@@ -41,7 +41,7 @@ namespace Beefs
             Dictionary<Need, double> prices = new Dictionary<Need, double>();
 
             List<Repositioner> repositioners = new List<Repositioner>();
-            repositioners.Add(new PythagoreanRepositioner(1, new List<Pos>() { TheSims.x, TheSims.z }));
+            repositioners.Add(new PythagoreanRepositioner(1, new List<Need>() { TheSims.x, TheSims.z }));
 
             ScanContext context = new ScanContext(tasks, prices, repositioners);
 

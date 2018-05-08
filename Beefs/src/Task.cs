@@ -9,11 +9,11 @@ namespace Beefs
     public class Task
     {
         public readonly string name;
-        public readonly IReadOnlyCollection<Need> needs; // these must all be nonzero to complete this task
-        public readonly Dictionary<Pos, double> positions; // to complete the task, all positions must be synced to these
-        public readonly Dictionary<Need, double> outcomes;
+        public readonly IReadOnlyDictionary<Need, double> needs; // these must be met or exceeded to complete this task
+        public readonly IReadOnlyDictionary<Need, double> positions; // to complete the task, all positions must be synced to these
+        public readonly IReadOnlyDictionary<Need, double> outcomes; // these will be produced when the task is completed
 
-        public Task(string name, IReadOnlyCollection<Need> needs, Dictionary<Pos, double> positions, Dictionary<Need, double> outcomes)
+        public Task(string name, IReadOnlyDictionary<Need, double> needs, IReadOnlyDictionary<Need, double> positions, IReadOnlyDictionary<Need, double> outcomes)
         {
             this.name = name;
             this.needs = needs;

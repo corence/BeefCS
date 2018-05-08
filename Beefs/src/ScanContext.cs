@@ -19,7 +19,7 @@ namespace Beefs
             this.repositioners = repositioners;
         }
 
-        public double costToMove(IReadOnlyDictionary<Pos, double> oldPositions, IReadOnlyDictionary<Pos, double> newPositions)
+        public double costToMove(IReadOnlyDictionary<Need, double> oldPositions, IReadOnlyDictionary<Need, double> newPositions)
         {
             double cost = 0;
 
