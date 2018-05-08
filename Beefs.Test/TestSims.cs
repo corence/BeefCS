@@ -13,21 +13,6 @@ namespace Beefs
     public class TestSims
     {
         [Test]
-        public void testMath()
-        {
-            Assert.That(1 + 2 == 3);
-        }
-
-        [Test]
-        public void testReference()
-        {
-            Assert.That(new Need() != new Need());
-            Need n = new Need();
-            Need q = n;
-            Assert.That(q == n);
-        }
-
-        [Test]
         public void testDeep()
         {
             TheSims sims = new TheSims();
@@ -47,11 +32,13 @@ namespace Beefs
 
             ScanContext context = new ScanContext(tasks, prices, repositioners);
 
-            ScanNode result = new Scanner().Scan(context, TheSims.social);
+            ScanNode result = new Scanner().Scan(context, TheSims.social, new Dictionary<Need, double> { { TheSims.x, 0 } } );
 
             result.ShouldNotBeNull();
             result.task.name.ShouldBe("buy ingredients");
-            result.cost.ShouldBe(21);
+            double moveCost = (4 + 4 + 3 + 6) * 1.0;
+            double cashCost = 1 * 8.0;
+            result.cost.ShouldBe(moveCost + cashCost);
         }
     }
 }

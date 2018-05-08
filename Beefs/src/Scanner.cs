@@ -8,12 +8,17 @@ namespace Beefs
 {
     public class Scanner
     {
-        public ScanNode Scan(ScanContext context, Need terminalNeed)
+        public Dictionary<Need, double> Empty()
+        {
+            return new Dictionary<Need, double>();
+        }
+
+        public ScanNode Scan(ScanContext context, Need terminalNeed, IReadOnlyDictionary<Need, double> initialPositions)
         {
             // Initialise our scan with a terminal node
             Dictionary<Need, double> needs = new Dictionary<Need, double>()
             { { terminalNeed, 1 } };
-            ScanNode terminator = new ScanNode(new Task("terminator", needs, new Dictionary<Need, double>(), new Dictionary<Need, double>(), new Dictionary<Need, double>()), 0, new Dictionary<Need, double>());
+            ScanNode terminator = new ScanNode(new Task("terminator", needs, Empty(), Empty(), Empty()), 0, Empty());
             SortedSet<ScanNode> nodes = new SortedSet<ScanNode>(new ScanNode.ScanNodeComparer());
             nodes.Add(terminator);
 
@@ -21,6 +26,12 @@ namespace Beefs
             {
                 ScanNode successor = nodes.First();
                 nodes.Remove(successor);
+
+                if (successor.task.needs.Count == 0)
+                {
+                    // This is it -- we found a worthy task
+                    return successor;
+                }
 
                 foreach (var needEntry in successor.task.needs)
                 {
@@ -34,7 +45,8 @@ namespace Beefs
                         ScanNode candidate = new ScanNode(task, context.costOfTask(task, successor) + successor.cost, successor.updatePositions(task.positions));
                         if (candidate.task.needs.Count == 0)
                         {
-                            return candidate;
+                            // finally, the candidate will also be considered with the cost to get back to the scanner's initial position
+                            candidate.cost += context.costToChangePositions(initialPositions, candidate.positions);
                         }
                         nodes.Add(candidate);
                     }

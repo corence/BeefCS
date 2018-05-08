@@ -9,7 +9,7 @@ namespace Beefs
     public class ScanNode
     {
         public readonly Task task;
-        public readonly double cost;
+        public double cost;
         public readonly Dictionary<Need, double> positions;
         public readonly Dictionary<Need, double> openNeeds;
         private readonly long id; // because c# doesn't appear to have a reference equality comparer -- wtf
