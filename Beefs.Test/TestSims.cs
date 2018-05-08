@@ -15,7 +15,7 @@ namespace Beefs
         [Test]
         public void testMath()
         {
-            Assert.That(1 + 2 == 44);
+            Assert.That(1 + 2 == 3);
         }
 
         [Test]
@@ -33,12 +33,14 @@ namespace Beefs
             TheSims sims = new TheSims();
 
             List<Task> tasks = new List<Task>();
-            tasks.Add(sims.BakeFood(3, 3));
+            tasks.Add(sims.BakeFood(3, 0));
             tasks.Add(sims.ServeDinner(9, 0));
+            tasks.Add(sims.BuyIngredients(-4, 0)); // here's the fridge!
             tasks.Add(sims.ChopIngredients(0, 0));
-            tasks.Add(sims.BakeFood(-4, -4)); // a second oven exists
+            tasks.Add(sims.BakeFood(-4, 0)); // a second oven exists
 
             Dictionary<Need, double> prices = new Dictionary<Need, double>();
+            prices.Add(TheSims.cash, 8); // i hate spending cash 8 times as much as i hate walking
 
             List<Repositioner> repositioners = new List<Repositioner>();
             repositioners.Add(new PythagoreanRepositioner(1, new List<Need>() { TheSims.x, TheSims.z }));
@@ -48,8 +50,8 @@ namespace Beefs
             ScanNode result = new Scanner().Scan(context, TheSims.social);
 
             result.ShouldNotBeNull();
-            result.task.name.ShouldBe("abc");
-            result.cost.ShouldBe(5);
+            result.task.name.ShouldBe("buy ingredients");
+            result.cost.ShouldBe(21);
         }
     }
 }

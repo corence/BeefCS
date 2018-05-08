@@ -19,7 +19,24 @@ namespace Beefs
             this.repositioners = repositioners;
         }
 
-        public double costToMove(IReadOnlyDictionary<Need, double> oldPositions, IReadOnlyDictionary<Need, double> newPositions)
+        public double costOfTask(Task task, ScanNode successor)
+        {
+            return costToChangePositions(successor.positions, task.positions) + costToPurchaseProducts(task.charges);
+        }
+
+        public double costToPurchaseProducts(IReadOnlyDictionary<Need, double> charges)
+        {
+            double cost = 0;
+
+            foreach (var charge in charges)
+            {
+                cost += prices[charge.Key] * charge.Value;
+            }
+
+            return cost;
+        }
+
+        public double costToChangePositions(IReadOnlyDictionary<Need, double> oldPositions, IReadOnlyDictionary<Need, double> newPositions)
         {
             double cost = 0;
 

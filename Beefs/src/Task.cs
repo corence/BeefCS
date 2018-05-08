@@ -10,13 +10,19 @@ namespace Beefs
     {
         public readonly string name;
         public readonly IReadOnlyDictionary<Need, double> needs; // these must be met or exceeded to complete this task
+        public readonly IReadOnlyDictionary<Need, double> charges; // to complete the task, all of these must be spent at the going rate (defined by ScanContext)
         public readonly IReadOnlyDictionary<Need, double> positions; // to complete the task, all positions must be synced to these
         public readonly IReadOnlyDictionary<Need, double> outcomes; // these will be produced when the task is completed
 
-        public Task(string name, IReadOnlyDictionary<Need, double> needs, IReadOnlyDictionary<Need, double> positions, IReadOnlyDictionary<Need, double> outcomes)
+        public Task(string name,
+                    IReadOnlyDictionary<Need, double> needs,
+                    IReadOnlyDictionary<Need, double> charges,
+                    IReadOnlyDictionary<Need, double> positions,
+                    IReadOnlyDictionary<Need, double> outcomes)
         {
             this.name = name;
             this.needs = needs;
+            this.charges = charges;
             this.positions = positions;
             this.outcomes = outcomes;
         }
