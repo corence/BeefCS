@@ -9,34 +9,34 @@ namespace Beefs
     public class ScanContext
     {
         public readonly IReadOnlyList<Task> tasks;
-        public readonly IReadOnlyDictionary<Need, double> prices;
+        public readonly IReadOnlyDictionary<Need, double> desires;
         public readonly IReadOnlyCollection<Repositioner> repositioners;
 
-        public ScanContext(IReadOnlyList<Task> tasks, IReadOnlyDictionary<Need, double> prices, IReadOnlyCollection<Repositioner> repositioners)
+        public ScanContext(IReadOnlyList<Task> tasks, IReadOnlyDictionary<Need, double> desires, IReadOnlyCollection<Repositioner> repositioners)
         {
             this.tasks = tasks;
-            this.prices = prices;
+            this.desires = desires;
             this.repositioners = repositioners;
         }
 
-        public double costOfTask(Task task, ScanNode successor)
+        public double profitOfTask(Task task, ScanNode successor)
         {
-            return costToChangePositions(successor.positions, task.positions) + costToPurchaseProducts(task.charges);
+            return outcomeProfits(task.outcomes) - repositioningCost(successor.positions, task.positions);
         }
 
-        public double costToPurchaseProducts(IReadOnlyDictionary<Need, double> charges)
+        public double outcomeProfits(IReadOnlyDictionary<Need, double> outcomes)
         {
-            double cost = 0;
+            double profit = 0;
 
-            foreach (var charge in charges)
+            foreach (var outcome in outcomes)
             {
-                cost += prices[charge.Key] * charge.Value;
+                profit += desires[outcome.Key] * outcome.Value;
             }
 
-            return cost;
+            return profit;
         }
 
-        public double costToChangePositions(IReadOnlyDictionary<Need, double> oldPositions, IReadOnlyDictionary<Need, double> newPositions)
+        public double repositioningCost(IReadOnlyDictionary<Need, double> oldPositions, IReadOnlyDictionary<Need, double> newPositions)
         {
             double cost = 0;
 

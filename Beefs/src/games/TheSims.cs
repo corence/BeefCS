@@ -17,6 +17,8 @@ namespace Beefs.games
         public static readonly Item choppedIngredients = new Item();
         public static readonly Item rawIngredients = new Item();
         public static readonly Item cash = new Item();
+        public static readonly Item fridge = new Item();
+        public static readonly Item artwork = new Item();
         public static readonly Need x = new Need();
         public static readonly Need z = new Need();
 
@@ -26,7 +28,6 @@ namespace Beefs.games
             {
                 { food, 4 }
             };
-            Dictionary<Need, double> charges = new Dictionary<Need, double>();
             Dictionary<Need, double> positions = new Dictionary<Need, double>
             {
                 { TheSims.x, x },
@@ -36,7 +37,7 @@ namespace Beefs.games
             {
                 { social, 4 }
             };
-            return new Task("serve dinner", needs, charges, positions, outcomes);
+            return new Task("serve dinner", needs, positions, outcomes);
         }
 
         public Task BakeFood(double x, double z)
@@ -45,7 +46,6 @@ namespace Beefs.games
             {
                 { choppedIngredients, 1 }
             };
-            Dictionary<Need, double> charges = new Dictionary<Need, double>();
             Dictionary<Need, double> positions = new Dictionary<Need, double>
             {
                 { TheSims.x, x },
@@ -55,7 +55,7 @@ namespace Beefs.games
             {
                 { food, 1 }
             };
-            return new Task("bake food", needs, charges, positions, outcomes);
+            return new Task("bake food", needs, positions, outcomes);
         }
 
         public Task ChopIngredients(double x, double z)
@@ -64,7 +64,6 @@ namespace Beefs.games
             {
                 { rawIngredients, 1 }
             };
-            Dictionary<Need, double> charges = new Dictionary<Need, double>();
             Dictionary<Need, double> positions = new Dictionary<Need, double>
             {
                 { TheSims.x, x },
@@ -74,26 +73,33 @@ namespace Beefs.games
             {
                 { choppedIngredients, 1 }
             };
-            return new Task("chop ingredients", needs, charges, positions, outcomes);
+            return new Task("chop ingredients", needs, positions, outcomes);
+        }
+
+        public Task SellPaintingAt(int v1, int v2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task BuyFridgeAt(int v1, int v2)
+        {
+            throw new NotImplementedException();
         }
 
         public Task BuyIngredients(double x, double z)
         {
             Dictionary<Need, double> needs = new Dictionary<Need, double>();
-            Dictionary<Need, double> charges = new Dictionary<Need, double>
-            {
-                { cash, 1 }
-            };
             Dictionary<Need, double> positions = new Dictionary<Need, double>
             {
                 { TheSims.x, x },
-                { TheSims.z, z }
+                { TheSims.z, z },
             };
             Dictionary<Need, double> outcomes = new Dictionary<Need, double>
             {
-                { rawIngredients, 1 }
+                { rawIngredients, 1 },
+                { cash, -1 }
             };
-            return new Task("buy ingredients", needs, charges, positions, outcomes);
+            return new Task("buy ingredients", needs, positions, outcomes);
         }
     }
 }

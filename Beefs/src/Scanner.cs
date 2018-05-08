@@ -13,12 +13,10 @@ namespace Beefs
             return new Dictionary<Need, double>();
         }
 
-        public ScanNode Scan(ScanContext context, Need terminalNeed, IReadOnlyDictionary<Need, double> initialPositions)
+        public ScanNode Scan(ScanContext context, IReadOnlyDictionary<Need, double> initialPositions)
         {
             // Initialise our scan with a terminal node
-            Dictionary<Need, double> needs = new Dictionary<Need, double>()
-            { { terminalNeed, 1 } };
-            ScanNode terminator = new ScanNode(new Task("terminator", needs, Empty(), Empty(), Empty()), 0, Empty());
+            ScanNode terminator = new ScanNode(new Task("terminator", context.desires, Empty(), Empty()), 0, Empty());
             SortedSet<ScanNode> nodes = new SortedSet<ScanNode>(new ScanNode.ScanNodeComparer());
             nodes.Add(terminator);
 
@@ -42,11 +40,11 @@ namespace Beefs
                     Need successorNeed = needEntry.Key;
                     foreach(var task in context.tasks.Where(task => task.outcomes.ContainsKey(successorNeed)))
                     {
-                        ScanNode candidate = new ScanNode(task, context.costOfTask(task, successor) + successor.cost, successor.updatePositions(task.positions));
+                        ScanNode candidate = new ScanNode(task, context.profitOfTask(task, successor) + successor.cost, successor.updatePositions(task.positions));
                         if (candidate.task.needs.Count == 0)
                         {
                             // finally, the candidate will also be considered with the cost to get back to the scanner's initial position
-                            candidate.cost += context.costToChangePositions(initialPositions, candidate.positions);
+                            candidate.cost += context.repositioningCost(initialPositions, candidate.positions);
                         }
                         nodes.Add(candidate);
                     }
