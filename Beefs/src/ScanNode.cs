@@ -11,6 +11,7 @@ namespace Beefs
         public readonly Task task;
         public readonly double cost;
         public readonly Dictionary<Pos, double> positions;
+        public readonly List<Need> openNeeds;
         private readonly long id; // because c# doesn't appear to have a reference equality comparer -- wtf
         private static long nextId = 1;
 
@@ -19,6 +20,7 @@ namespace Beefs
             this.task = task;
             this.cost = cost;
             this.positions = positions;
+            this.openNeeds = new List<Need>(task.needs);
             id = nextId++;
         }
 
@@ -36,28 +38,13 @@ namespace Beefs
             }
         }
 
-        public double costOf(Task task)
+        public Dictionary<Pos, double> updatePositions(IReadOnlyDictionary<Pos, double> newPositions)
         {
-            double newCost = 0;
+            Dictionary<Pos, double> result = new Dictionary<Pos, double>(this.positions);
 
-            foreach (var entry in task.positions.Intersect(this.positions))
+            foreach (var entry in newPositions)
             {
-                newCost += Math.Abs(task.positions[entry.Key] - this.positions[entry.Key]);
-            }
-
-            return newCost;
-        }
-
-        public Dictionary<Pos, double> updatePositions(Task task)
-        {
-            Dictionary<Pos, double> result = new Dictionary<Pos, double>();
-            foreach (var entry in this.positions)
-            {
-                result[entry.Key] = entry.Value;
-            }
-
-            foreach (var entry in task.positions)
-            {
+                // replace all positions that appear in newPositions; retain any that don't
                 result[entry.Key] = entry.Value;
             }
             return result;

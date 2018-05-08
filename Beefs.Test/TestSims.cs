@@ -37,8 +37,13 @@ namespace Beefs
             tasks.Add(sims.ServeDinner(9, 0));
             tasks.Add(sims.ChopIngredients(0, 0));
             tasks.Add(sims.BakeFood(-4, -4)); // a second oven exists
+
             Dictionary<Need, double> prices = new Dictionary<Need, double>();
-            ScanContext context = new ScanContext(tasks, prices);
+
+            List<Repositioner> repositioners = new List<Repositioner>();
+            repositioners.Add(new PythagoreanRepositioner(1, new List<Pos>() { TheSims.x, TheSims.z }));
+
+            ScanContext context = new ScanContext(tasks, prices, repositioners);
 
             ScanNode result = new Scanner().Scan(context, TheSims.social);
 

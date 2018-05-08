@@ -26,7 +26,7 @@ namespace Beefs
                 {
                     foreach(var task in context.tasks.Where(task => task.outcomes.ContainsKey(successorNeed)))
                     {
-                        ScanNode candidate = new ScanNode(task, successor.costOf(task) + successor.cost, successor.updatePositions(task));
+                        ScanNode candidate = new ScanNode(task, context.costToMove(successor.positions, task.positions) + successor.cost, successor.updatePositions(task.positions));
                         if (candidate.task.needs.Count == 0)
                         {
                             return candidate;

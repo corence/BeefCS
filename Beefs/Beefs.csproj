@@ -147,6 +147,7 @@
     <Compile Include="DebuggerShim.cs" />
     <Compile Include="src\Need.cs" />
     <Compile Include="src\Pos.cs" />
+    <Compile Include="src\Repositioner.cs" />
     <Compile Include="src\ScanContext.cs" />
     <Compile Include="src\Scanner.cs" />
     <Compile Include="Program.cs" />
