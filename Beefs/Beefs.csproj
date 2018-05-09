@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DebuggerShim.cs" />
+    <Compile Include="src\games\Aero.cs" />
     <Compile Include="src\games\Warcraft3.cs" />
     <Compile Include="src\Resource.cs" />
     <Compile Include="src\Repositioner.cs" />
