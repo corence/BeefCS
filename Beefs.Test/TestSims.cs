@@ -64,7 +64,7 @@ namespace Beefs.games
             List<Task> tasks = new List<Task>
             {
                 sims.BuyFridgeAt(13, 14),
-                sims.SellPaintingAt(13, 10)
+                sims.SellArtworkAt(13, 10)
             };
 
             Dictionary<Resource, double> desires = new Dictionary<Resource, double>
@@ -83,17 +83,17 @@ namespace Beefs.games
 
             Dictionary<Resource, double> startingResources = new Dictionary<Resource, double>
             {
-                { TheSims.x, 0 },
-                { TheSims.z, 0 },
+                { TheSims.x, 13 },
                 { TheSims.cash, 50 }
             };
             ScanNode result = new Scanner().Scan(context, startingResources);
 
             result.ShouldNotBeNull();
-            result.task.name.ShouldBe("buy ingredients");
-            double moveCost = (4 + 4 + 3 + 6) * 1.0; // the dude starts at x position 0 then moves from there
-            double cashCost = 1 * 8.0; // this is built in to "buy ingredients" task
-            result.profit.ShouldBe(moveCost + cashCost);
+            result.task.name.ShouldBe("sell artwork");
+            double moveCost    = 0 * 1.0; // since we never actually buy the fridge
+            double cashWin     = 4 * 10.0; // this is built in to "buy ingredients" task
+            double artworkCost = 1 * 7.0; // so long, picture
+            result.profit.ShouldBe(cashWin - artworkCost - moveCost);
         }
     }
 }

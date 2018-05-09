@@ -79,14 +79,41 @@ namespace Beefs.games
             return new Task("chop ingredients", needs, positions, outcomes);
         }
 
-        public Task SellPaintingAt(int v1, int v2)
+        public Task SellArtworkAt(double x, double z)
         {
-            throw new NotImplementedException();
+            Dictionary<Resource, double> needs = new Dictionary<Resource, double>
+            {
+            };
+            Dictionary<Resource, double> positions = new Dictionary<Resource, double>
+            {
+                { TheSims.x, x },
+                { TheSims.z, z }
+            };
+            Dictionary<Resource, double> outcomes = new Dictionary<Resource, double>
+            {
+                { cash, 4 },
+                { artwork, -1 } // this is weird and unnatural
+            };
+            return new Task("sell artwork", needs, positions, outcomes);
         }
 
-        public Task BuyFridgeAt(int v1, int v2)
+        public Task BuyFridgeAt(double x, double z)
         {
-            throw new NotImplementedException();
+            Dictionary<Resource, double> needs = new Dictionary<Resource, double>
+            {
+                { cash, 444 }
+            };
+            Dictionary<Resource, double> positions = new Dictionary<Resource, double>
+            {
+                { TheSims.x, x },
+                { TheSims.z, z }
+            };
+            Dictionary<Resource, double> outcomes = new Dictionary<Resource, double>
+            {
+                { cash, -444 },
+                { fridge, 1 } // this is weird and unnatural
+            };
+            return new Task("buy fridge", needs, positions, outcomes);
         }
 
         public Task BuyIngredients(double x, double z)

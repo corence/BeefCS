@@ -44,7 +44,7 @@ namespace Beefs
                         if (candidate.task.needs.Count == 0)
                         {
                             // finally, the candidate will also be considered with the cost to get back to the scanner's initial position
-                            candidate.profit += context.repositioningCost(initialPositions, candidate.positions);
+                            candidate.profit -= context.repositioningCost(initialPositions, candidate.positions);
                         }
                         nodes.Add(candidate);
                     }
