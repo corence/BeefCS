@@ -8,27 +8,30 @@ namespace Beefs.src.games
 {
     class Warcraft3
     {
-        public class Item : Need
+        public class Item : Resource
         {
+            public Item(string name) : base(name)
+            {
+            }
         }
 
-        public static readonly Need baseStrength = new Need();
-        public static readonly Need delay = new Need();
-        public static readonly Item wood = new Item();
-        public static readonly Item gold = new Item();
-        public static readonly Item food = new Item();
-        public static readonly Need x = new Need();
-        public static readonly Need z = new Need();
+        public static readonly Resource baseStrength = new Resource("strength of base");
+        public static readonly Resource delay = new Resource("delay");
+        public static readonly Item wood = new Item("wood");
+        public static readonly Item gold = new Item("gold");
+        public static readonly Item food = new Item("food");
+        public static readonly Resource x = new Resource("x");
+        public static readonly Resource z = new Resource("z");
 
         public Task ChopTree(double x, double z)
         {
-            Dictionary<Need, double> needs = new Dictionary<Need, double>();
-            Dictionary<Need, double> positions = new Dictionary<Need, double>
+            Dictionary<Resource, double> needs = new Dictionary<Resource, double>();
+            Dictionary<Resource, double> positions = new Dictionary<Resource, double>
             {
                 { Warcraft3.x, x },
                 { Warcraft3.z, z }
             };
-            Dictionary<Need, double> outcomes = new Dictionary<Need, double>
+            Dictionary<Resource, double> outcomes = new Dictionary<Resource, double>
             {
                 { wood, 1 },
                 { delay, 7 } // it takes about 7 auts to chop down a tree in this world
@@ -38,9 +41,9 @@ namespace Beefs.src.games
 
         public Task DesignateTower() // note that this task doesn't take an x/z; it's up to the game's tactical AI to decide where to place it (!)
         {
-            Dictionary<Need, double> needs = new Dictionary<Need, double>();
-            Dictionary<Need, double> positions = new Dictionary<Need, double>();
-            Dictionary<Need, double> outcomes = new Dictionary<Need, double>
+            Dictionary<Resource, double> needs = new Dictionary<Resource, double>();
+            Dictionary<Resource, double> positions = new Dictionary<Resource, double>();
+            Dictionary<Resource, double> outcomes = new Dictionary<Resource, double>
             {
                 { gold, -130 }, // these numbers are definitely made up
                 { wood, -70 }, // hey what's the difference between a charge and a need? i'm not seeing it

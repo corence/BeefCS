@@ -9,10 +9,10 @@ namespace Beefs
     public class ScanContext
     {
         public readonly IReadOnlyList<Task> tasks;
-        public readonly IReadOnlyDictionary<Need, double> desires;
+        public readonly IReadOnlyDictionary<Resource, double> desires;
         public readonly IReadOnlyCollection<Repositioner> repositioners;
 
-        public ScanContext(IReadOnlyList<Task> tasks, IReadOnlyDictionary<Need, double> desires, IReadOnlyCollection<Repositioner> repositioners)
+        public ScanContext(IReadOnlyList<Task> tasks, IReadOnlyDictionary<Resource, double> desires, IReadOnlyCollection<Repositioner> repositioners)
         {
             this.tasks = tasks;
             this.desires = desires;
@@ -24,7 +24,7 @@ namespace Beefs
             return outcomeProfits(task.outcomes) - repositioningCost(successor.positions, task.positions);
         }
 
-        public double outcomeProfits(IReadOnlyDictionary<Need, double> outcomes)
+        public double outcomeProfits(IReadOnlyDictionary<Resource, double> outcomes)
         {
             double profit = 0;
 
@@ -36,7 +36,7 @@ namespace Beefs
             return profit;
         }
 
-        public double repositioningCost(IReadOnlyDictionary<Need, double> oldPositions, IReadOnlyDictionary<Need, double> newPositions)
+        public double repositioningCost(IReadOnlyDictionary<Resource, double> oldPositions, IReadOnlyDictionary<Resource, double> newPositions)
         {
             double cost = 0;
 

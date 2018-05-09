@@ -146,7 +146,7 @@
   <ItemGroup>
     <Compile Include="DebuggerShim.cs" />
     <Compile Include="src\games\Warcraft3.cs" />
-    <Compile Include="src\Need.cs" />
+    <Compile Include="src\Resource.cs" />
     <Compile Include="src\Repositioner.cs" />
     <Compile Include="src\ScanContext.cs" />
     <Compile Include="src\Scanner.cs" />

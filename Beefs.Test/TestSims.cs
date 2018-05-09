@@ -25,18 +25,18 @@ namespace Beefs.games
                 sims.ChopIngredients(0, 0),
                 sims.BakeFood(-4, 0) // a second oven exists
             };
-            Dictionary<Need, double> desires = new Dictionary<Need, double>
+            Dictionary<Resource, double> desires = new Dictionary<Resource, double>
             {
                 { TheSims.cash, 8 }, // i hate spending cash 8 times as much as i hate walking
                 { TheSims.social, 120 } // but OMG i love being social!
             };
             List<Repositioner> repositioners = new List<Repositioner>()
             {
-                new PythagoreanRepositioner(1, new List<Need>() { TheSims.x, TheSims.z })
+                new PythagoreanRepositioner(1, new List<Resource>() { TheSims.x, TheSims.z })
             };
             ScanContext context = new ScanContext(tasks, desires, repositioners);
 
-            Dictionary<Need, double> startingResources = new Dictionary<Need, double>
+            Dictionary<Resource, double> startingResources = new Dictionary<Resource, double>
             {
                 { TheSims.x, 0 },
                 { TheSims.cash, 50 }
@@ -66,7 +66,7 @@ namespace Beefs.games
                 sims.SellPaintingAt(13, 10)
             };
 
-            Dictionary<Need, double> desires = new Dictionary<Need, double>
+            Dictionary<Resource, double> desires = new Dictionary<Resource, double>
             {
                 { TheSims.cash, 10 }, // each Simolean is worth 10 happiness to me
                 { TheSims.fridge, 100 }, // woah i am seriously hankering for that fridge
@@ -75,12 +75,12 @@ namespace Beefs.games
 
             List<Repositioner> repositioners = new List<Repositioner>
             {
-                new PythagoreanRepositioner(1, new List<Need> { TheSims.x, TheSims.z })
+                new PythagoreanRepositioner(1, new List<Resource> { TheSims.x, TheSims.z })
             };
 
             ScanContext context = new ScanContext(tasks, desires, repositioners);
 
-            Dictionary<Need, double> startingResources = new Dictionary<Need, double>
+            Dictionary<Resource, double> startingResources = new Dictionary<Resource, double>
             {
                 { TheSims.x, 0 },
                 { TheSims.z, 0 },

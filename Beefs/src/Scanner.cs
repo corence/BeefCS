@@ -8,12 +8,12 @@ namespace Beefs
 {
     public class Scanner
     {
-        public Dictionary<Need, double> Empty()
+        public Dictionary<Resource, double> Empty()
         {
-            return new Dictionary<Need, double>();
+            return new Dictionary<Resource, double>();
         }
 
-        public ScanNode Scan(ScanContext context, IReadOnlyDictionary<Need, double> initialPositions)
+        public ScanNode Scan(ScanContext context, IReadOnlyDictionary<Resource, double> initialPositions)
         {
             // Initialise our scan with a terminal node
             ScanNode terminator = new ScanNode(new Task("terminator", context.desires, Empty(), Empty()), 0, Empty());
@@ -37,7 +37,7 @@ namespace Beefs
                     {
                         continue;
                     }
-                    Need successorNeed = needEntry.Key;
+                    Resource successorNeed = needEntry.Key;
                     foreach(var task in context.tasks.Where(task => task.outcomes.ContainsKey(successorNeed)))
                     {
                         ScanNode candidate = new ScanNode(task, context.profitOfTask(task, successor) + successor.cost, successor.updatePositions(task.positions));

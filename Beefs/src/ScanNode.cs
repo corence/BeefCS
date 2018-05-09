@@ -10,12 +10,12 @@ namespace Beefs
     {
         public readonly Task task;
         public double cost;
-        public readonly Dictionary<Need, double> positions;
-        public readonly Dictionary<Need, double> openNeeds;
+        public readonly Dictionary<Resource, double> positions;
+        public readonly Dictionary<Resource, double> openNeeds;
         private readonly long id; // because c# doesn't appear to have a reference equality comparer -- wtf
         private static long nextId = 1;
 
-        public ScanNode(Task task, double cost, Dictionary<Need, double> positions)
+        public ScanNode(Task task, double cost, Dictionary<Resource, double> positions)
         {
             this.task = task;
             this.cost = cost;
@@ -38,9 +38,9 @@ namespace Beefs
             }
         }
 
-        public Dictionary<Need, double> updatePositions(IReadOnlyDictionary<Need, double> newPositions)
+        public Dictionary<Resource, double> updatePositions(IReadOnlyDictionary<Resource, double> newPositions)
         {
-            Dictionary<Need, double> result = new Dictionary<Need, double>(this.positions);
+            Dictionary<Resource, double> result = new Dictionary<Resource, double>(this.positions);
 
             foreach (var entry in newPositions)
             {

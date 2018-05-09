@@ -6,21 +6,21 @@ namespace Beefs
 {
     public interface Repositioner
     {
-        double costToMove(IReadOnlyDictionary<Need, double> oldPositions, IReadOnlyDictionary<Need, double> newPositions);
+        double costToMove(IReadOnlyDictionary<Resource, double> oldPositions, IReadOnlyDictionary<Resource, double> newPositions);
     }
 
     public class SimpleRepositioner : Repositioner
     {
         public readonly double coefficient;
-        public readonly Need pos;
+        public readonly Resource pos;
 
-        public SimpleRepositioner(double coefficient, Need pos)
+        public SimpleRepositioner(double coefficient, Resource pos)
         {
             this.coefficient = coefficient;
             this.pos = pos;
         }
 
-        public double costToMove(IReadOnlyDictionary<Need, double> oldPositions, IReadOnlyDictionary<Need, double> newPositions)
+        public double costToMove(IReadOnlyDictionary<Resource, double> oldPositions, IReadOnlyDictionary<Resource, double> newPositions)
         {
             if (oldPositions.ContainsKey(pos) && newPositions.ContainsKey(pos))
             {
@@ -36,15 +36,15 @@ namespace Beefs
     public class PythagoreanRepositioner : Repositioner
     {
         public readonly double coefficient;
-        public readonly IReadOnlyCollection<Need> poses;
+        public readonly IReadOnlyCollection<Resource> poses;
 
-        public PythagoreanRepositioner(double coefficient, IReadOnlyCollection<Need> poses)
+        public PythagoreanRepositioner(double coefficient, IReadOnlyCollection<Resource> poses)
         {
             this.coefficient = coefficient;
             this.poses = poses;
         }
 
-        public double costToMove(IReadOnlyDictionary<Need, double> oldPositions, IReadOnlyDictionary<Need, double> newPositions)
+        public double costToMove(IReadOnlyDictionary<Resource, double> oldPositions, IReadOnlyDictionary<Resource, double> newPositions)
         {
             double squareDistance
                 = poses
