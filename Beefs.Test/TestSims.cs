@@ -47,7 +47,8 @@ namespace Beefs.games
             result.task.name.ShouldBe("buy ingredients");
             double moveCost = (4 + 4 + 3 + 6) * 1.0; // the dude starts at x position 0 then moves from there
             double cashCost = 1 * 8.0; // buy ingredients costs 1 cash
-            result.cost.ShouldBe(moveCost + cashCost);
+            double socialReward = 4 * 120.0; // huge social reward for this sim
+            result.profit.ShouldBe(socialReward - moveCost - cashCost);
         }
 
         [Test]
@@ -92,7 +93,7 @@ namespace Beefs.games
             result.task.name.ShouldBe("buy ingredients");
             double moveCost = (4 + 4 + 3 + 6) * 1.0; // the dude starts at x position 0 then moves from there
             double cashCost = 1 * 8.0; // this is built in to "buy ingredients" task
-            result.cost.ShouldBe(moveCost + cashCost);
+            result.profit.ShouldBe(moveCost + cashCost);
         }
     }
 }

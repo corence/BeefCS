@@ -30,7 +30,10 @@ namespace Beefs
 
             foreach (var outcome in outcomes)
             {
-                profit += desires[outcome.Key] * outcome.Value;
+                if (desires.ContainsKey(outcome.Key))
+                {
+                    profit += desires[outcome.Key] * outcome.Value;
+                }
             }
 
             return profit;

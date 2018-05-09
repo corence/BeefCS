@@ -9,16 +9,16 @@ namespace Beefs
     public class ScanNode
     {
         public readonly Task task;
-        public double cost;
+        public double profit;
         public readonly Dictionary<Resource, double> positions;
         public readonly Dictionary<Resource, double> openNeeds;
         private readonly long id; // because c# doesn't appear to have a reference equality comparer -- wtf
         private static long nextId = 1;
 
-        public ScanNode(Task task, double cost, Dictionary<Resource, double> positions)
+        public ScanNode(Task task, double profit, Dictionary<Resource, double> positions)
         {
             this.task = task;
-            this.cost = cost;
+            this.profit = profit;
             this.positions = positions;
             this.openNeeds = task.needs.ToDictionary(pair => pair.Key, pair => pair.Value);
             id = nextId++;
@@ -28,7 +28,7 @@ namespace Beefs
         {
             public override int Compare(ScanNode x, ScanNode y)
             {
-                int result1 = x.cost.CompareTo(y.cost);
+                int result1 = x.profit.CompareTo(y.profit);
                 if (result1 != 0)
                 {
                     return result1;
