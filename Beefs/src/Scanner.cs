@@ -25,7 +25,7 @@ namespace Beefs
                 ScanNode successor = nodes.Last();
                 nodes.Remove(successor);
 
-                if (successor.task.needs.Count == 0)
+                if (successor.openNeeds.Count == 0)
                 {
                     // This is it -- we found a worthy task
                     return successor;
