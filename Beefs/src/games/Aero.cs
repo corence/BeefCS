@@ -26,8 +26,8 @@ namespace Beefs.src.games
             };
             Dictionary<Resource, double> positions = new Dictionary<Resource, double>
             {
-                { Aero.x, x },
-                { Aero.z, z }
+                { this.x, x },
+                { this.z, z }
             };
             Dictionary<Resource, double> outcomes = new Dictionary<Resource, double>
             {
@@ -46,13 +46,12 @@ namespace Beefs.src.games
             };
             Dictionary<Resource, double> positions = new Dictionary<Resource, double>
             {
-                { Aero.x, x },
-                { Aero.z, z }
+                { this.x, x },
+                { this.z, z }
             };
             Dictionary<Resource, double> outcomes = new Dictionary<Resource, double>
             {
                 { log, -1 },
-                { 
             };
             return new Task("serve dinner", needs, positions, outcomes);
         }

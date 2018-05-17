@@ -13,40 +13,29 @@ namespace Beefs
             return new Dictionary<Resource, double>();
         }
 
-        public ScanNode Scan(ScanContext context, IReadOnlyDictionary<Resource, double> initialPositions)
+        public ScanPath Scan(ScanContext context, IReadOnlyDictionary<Resource, double> initialPositions)
         {
             // Initialise our scan with a terminal node
             ScanNode terminator = new ScanNode(new Task("terminator", context.desires, Empty(), Empty()), 0, Empty());
-            SortedSet<ScanNode> nodes = new SortedSet<ScanNode>(new ScanNode.ScanNodeComparer());
-            nodes.Add(terminator);
+            ScanPath terminatorPath = new ScanPath(terminator, initialPositions);
+            SortedSet<ScanPath> paths = new SortedSet<ScanPath>(new ScanPath.ScanPathComparer());
+            paths.Add(terminatorPath);
 
-            while(nodes.Count > 0)
+            while(paths.Count > 0)
             {
-                ScanNode successor = nodes.Last();
-                nodes.Remove(successor);
+                ScanPath bestPath = paths.Last();
+                paths.Remove(bestPath);
 
-                if (successor.openNeeds.Count == 0)
+                List<ScanPath> extensions = bestPath.Scan(context);
+                if (extensions == null)
                 {
-                    // This is it -- we found a worthy task
-                    return successor;
+                    return bestPath;
                 }
-
-                foreach (var needEntry in successor.task.needs)
+                else
                 {
-                    if (needEntry.Value <= 0)
+                    foreach (ScanPath p in extensions)
                     {
-                        continue;
-                    }
-                    Resource successorNeed = needEntry.Key;
-                    foreach(var task in context.tasks.Where(task => task.outcomes.ContainsKey(successorNeed)))
-                    {
-                        ScanNode candidate = new ScanNode(task, context.profitOfTask(task, successor) + successor.profit, successor.updatePositions(task.positions));
-                        if (candidate.task.needs.Count == 0)
-                        {
-                            // finally, the candidate will also be considered with the cost to get back to the scanner's initial position
-                            candidate.profit -= context.repositioningCost(initialPositions, candidate.positions);
-                        }
-                        nodes.Add(candidate);
+                        paths.Add(p);
                     }
                 }
             }
