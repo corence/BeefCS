@@ -10,9 +10,9 @@ namespace Beefs
     {
         public readonly Scanner scanner;
 
-        public Shepherd()
+        public Shepherd(ScanContext context)
         {
-            this.scanner = new Scanner();
+            this.scanner = new Scanner(context);
         }
     }
 }

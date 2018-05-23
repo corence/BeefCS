@@ -47,7 +47,7 @@ namespace Beefs
             {
                 cost += repositioner.costToMove(oldPositions, newPositions);
             }
-
+            
             return cost;
         }
     }

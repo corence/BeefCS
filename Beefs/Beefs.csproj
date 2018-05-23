@@ -147,6 +147,7 @@
     <Compile Include="DebuggerShim.cs" />
     <Compile Include="src\games\Aero.cs" />
     <Compile Include="src\games\Warcraft3.cs" />
+    <Compile Include="src\ScanSpot.cs" />
     <Compile Include="src\Resource.cs" />
     <Compile Include="src\Repositioner.cs" />
     <Compile Include="src\ScanContext.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\ScanNode.cs" />
     <Compile Include="src\ScanPath.cs" />
+    <Compile Include="src\ScanWay.cs" />
     <Compile Include="src\Shepherd.cs" />
     <Compile Include="src\Task.cs" />
     <Compile Include="src\games\TheSims.cs" />

@@ -8,12 +8,95 @@ namespace Beefs
 {
     public class Scanner
     {
+        public readonly ScanContext context;
+
+        public Scanner(ScanContext context)
+        {
+            this.context = context;
+        }
+
         public Dictionary<Resource, double> Empty()
         {
             return new Dictionary<Resource, double>();
         }
 
-        public ScanPath Scan(ScanContext context, IReadOnlyDictionary<Resource, double> initialPositions)
+        private List<Task> DesirableTasks(ScanContext context)
+        {
+            List<Task> desirableTasks = new List<Task>();
+            foreach (Resource need in context.desires.Keys)
+            {
+                foreach (Task task in context.tasks)
+                {
+                    if (task.outcomes.ContainsKey(need) && task.outcomes[need] > 0)
+                    {
+                        desirableTasks.Add(task);
+                    }
+                }
+            }
+            return desirableTasks;
+        }
+
+        public ScanSpot ScanForSpots(IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
+        {
+            SortedSet<ScanSpot> spots = new SortedSet<ScanSpot>(new ScanSpot.SpotComparer());
+            foreach (Task task in DesirableTasks(context))
+            {
+                spots.Add(new ScanSpot(context, initialInventory, initialPositions, new List<Task> { task }));
+            }
+
+            while (spots.Count > 0)
+            {
+                ScanSpot spot = spots.Last();
+                spots.Remove(spot);
+
+                List<ScanSpot> nextSpots = spot.Scan();
+                if (nextSpots == null)
+                {
+                    return spot;
+                }
+                else
+                {
+                    foreach (var nextSpot in nextSpots)
+                    {
+                        spots.Add(nextSpot);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public Way ScanForWays(ScanContext context, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
+        {
+            SortedSet<Way> ways = new SortedSet<Way>(new Way.WayComparer());
+            foreach (Task task in DesirableTasks(context))
+            {
+                ways.Add(new Way(context, task, initialInventory, initialPositions));
+            }
+
+            while(ways.Count > 0)
+            {
+                Way way = ways.Last();
+                ways.Remove(way);
+
+                List<Way> nextWays = way.Scan();
+                if (nextWays == null)
+                {
+                    return way;
+                }
+                else
+                {
+                    foreach (var nextWay in nextWays)
+                    {
+                        ways.Add(nextWay);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public ScanPath ScanForPaths(ScanContext context, IReadOnlyDictionary<Resource, double> initialPositions)
         {
             // Initialise our scan with a terminal node
             ScanNode terminator = new ScanNode(new Task("terminator", context.desires, Empty(), Empty()), 0, Empty());
