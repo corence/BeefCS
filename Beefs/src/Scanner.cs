@@ -8,13 +8,6 @@ namespace Beefs
 {
     public class Scanner
     {
-        public readonly ScanContext context;
-
-        public Scanner(ScanContext context)
-        {
-            this.context = context;
-        }
-
         public Dictionary<Resource, double> Empty()
         {
             return new Dictionary<Resource, double>();
@@ -36,7 +29,7 @@ namespace Beefs
             return desirableTasks;
         }
 
-        public ScanSpot ScanForSpots(IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
+        public ScanSpot ScanForSpots(ScanContext context, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
         {
             SortedSet<ScanSpot> spots = new SortedSet<ScanSpot>(new ScanSpot.SpotComparer());
             foreach (Task task in DesirableTasks(context))

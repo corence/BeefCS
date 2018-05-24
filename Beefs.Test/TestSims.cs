@@ -47,7 +47,7 @@ namespace Beefs.games
                 { TheSims.x, 1000 }
             };
 
-            ScanSpot result = new Scanner(context).ScanForSpots(initialInventory, initialPositions);
+            ScanSpot result = new Scanner().ScanForSpots(context, initialInventory, initialPositions);
 
             result.ShouldNotBeNull();
             result.tasks.Count.ShouldBe(2);
@@ -94,7 +94,7 @@ namespace Beefs.games
                 { TheSims.x, 1000 }
             };
 
-            ScanSpot result = new Scanner(context).ScanForSpots(initialInventory, initialPositions);
+            ScanSpot result = new Scanner().ScanForSpots(context, initialInventory, initialPositions);
 
             result.ShouldNotBeNull();
             result.tasks.Count.ShouldBe(1);
@@ -139,7 +139,7 @@ namespace Beefs.games
                 { TheSims.x, 0 }
             };
 
-            ScanSpot result = new Scanner(context).ScanForSpots(initialInventory, initialPositions);
+            ScanSpot result = new Scanner().ScanForSpots(context, initialInventory, initialPositions);
 
             result.ShouldNotBeNull();
             result.tasks.Count.ShouldBe(4);
