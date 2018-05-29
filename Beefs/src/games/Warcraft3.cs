@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Beefs.src.games
+namespace Beefs.games
 {
     class Warcraft3
     {

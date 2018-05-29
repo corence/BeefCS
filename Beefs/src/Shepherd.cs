@@ -23,6 +23,7 @@ namespace Beefs
         public Task Scan(ScanContext context, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
         {
             ScanSpot spot = scanner.ScanForSpots(context, initialInventory, initialPositions);
+            return null;
         }
     }
 }

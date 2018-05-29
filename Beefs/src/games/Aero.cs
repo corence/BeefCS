@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Beefs.src.games
+namespace Beefs.games
 {
     // A made-up game kinda like war3
-    class Aero
+    public class Aero
     {
         public readonly Resource log = new Resource("log");
         public readonly Resource tree = new Resource("tree");

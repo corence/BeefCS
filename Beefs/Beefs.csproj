@@ -147,6 +147,7 @@
     <Compile Include="DebuggerShim.cs" />
     <Compile Include="src\games\Aero.cs" />
     <Compile Include="src\games\Warcraft3.cs" />
+    <Compile Include="src\OptimizingScanner.cs" />
     <Compile Include="src\ScanSpot.cs" />
     <Compile Include="src\Resource.cs" />
     <Compile Include="src\Repositioner.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="src\Shepherd.cs" />
     <Compile Include="src\Task.cs" />
     <Compile Include="src\games\TheSims.cs" />
+    <Compile Include="src\TaskCluster.cs" />
     <Compile Include="test\TestScanner.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestAero.cs" />
     <Compile Include="TestSims.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
