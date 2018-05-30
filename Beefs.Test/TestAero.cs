@@ -66,14 +66,15 @@ namespace Beefs.games
                 { aero.x, 0 },
                 { aero.z, 0 },
             };
+            OptimizingContext ocontext = new OptimizingContext(context, initialInventory, initialPositions);
 
-            OptimizingScanner scanner = new OptimizingScanner(new Scanner());
+            OptimizingScanner scanner = new OptimizingScanner(new SpotScanner());
 
-            scanner.Scan(context, initialInventory, initialPositions);
-            scanner.optimizationPlans.Count.ShouldBe(1);
+            scanner.Scan(ocontext);
+            scanner.optimizationSolutions.Count.ShouldBe(1);
 
-            scanner.Scan(context, initialInventory, initialPositions);
-            scanner.optimizationPlans.Count.ShouldBe(2); // hmm really? not if the cluster gets augmented
+            scanner.Scan(ocontext);
+            scanner.optimizationSolutions.Count.ShouldBe(2); // hmm really? not if the cluster gets augmented
         }
 
         /*
