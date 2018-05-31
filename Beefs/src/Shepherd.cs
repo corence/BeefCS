@@ -20,9 +20,9 @@ namespace Beefs
             this.scanner = new Scanner();
         }
 
-        public Task Scan(ScanContext context, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
+        public Task Scan(ScanContext context)
         {
-            ScanSpot spot = scanner.ScanForSpots(context, initialInventory, initialPositions);
+            ScanSpot spot = scanner.ScanForSpots(context);
             return null;
         }
     }

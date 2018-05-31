@@ -44,17 +44,18 @@ namespace Beefs.games.aero
                 aero.CraftSpear(44, 44),
                 aero.FortifyConstruction(7, 22, 22),
             };
+
             Dictionary<Resource, double> desires = new Dictionary<Resource, double>
             {
                 { Aero.log, 1 },
                 { Aero.spear, 5 },
                 { Aero.hatchet, 3 },
             };
+
             List<Repositioner> repositioners = new List<Repositioner>()
             {
                 new PythagoreanRepositioner(1, new List<Resource>() { Aero.x, Aero.z })
             };
-            ScanContext context = new ScanContext(tasks, desires, repositioners);
 
             Dictionary<Resource, double> initialInventory = new Dictionary<Resource, double>
             {
@@ -66,9 +67,10 @@ namespace Beefs.games.aero
                 { Aero.x, 0 },
                 { Aero.z, 0 },
             };
-            OptimizingContext ocontext = new OptimizingContext(context, initialInventory, initialPositions);
+            ScanContext context = new ScanContext(tasks, desires, repositioners, initialInventory, initialPositions);
+            OptimizingContext ocontext = new OptimizingContext(context);
 
-            OptimizingScanner scanner = new OptimizingScanner(new SpotScanner(context, initialInventory, initialPositions));
+            OptimizingScanner scanner = new OptimizingScanner(new SpotScanner(context));
 
             scanner.Scan(ocontext);
             scanner.optimizationSolutions.Count.ShouldBe(1);

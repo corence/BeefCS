@@ -13,16 +13,12 @@ namespace Beefs
         private readonly ScanContext context;
         public readonly Resource terminalDesire;
         public readonly IReadOnlyList<Task> tasks;
-        private readonly IReadOnlyDictionary<Resource, double> initialInventory;
-        private readonly IReadOnlyDictionary<Resource, double> initialPositions;
 
-        public ScanSpot(ScanContext context, Resource terminalDesire, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions, IReadOnlyList<Task> tasks)
+        public ScanSpot(ScanContext context, Resource terminalDesire, IReadOnlyList<Task> tasks)
         {
             this.id = nextId++;
             this.context = context;
             this.terminalDesire = terminalDesire;
-            this.initialInventory = initialInventory;
-            this.initialPositions = initialPositions;
             this.tasks = tasks;
         }
 
@@ -42,7 +38,7 @@ namespace Beefs
 
         public double Profit()
         {
-            IReadOnlyDictionary<Resource, double> positions = this.initialPositions;
+            IReadOnlyDictionary<Resource, double> positions = context.initialPositions;
             double profit = 0;
 
             for (int i = tasks.Count - 1; i >= 0; --i)
@@ -58,7 +54,7 @@ namespace Beefs
 
         public List<ScanSpot> Scan()
         {
-            IReadOnlyDictionary<Resource, double> inventory = Way.CurrentInventory(tasks, initialInventory);
+            IReadOnlyDictionary<Resource, double> inventory = Way.CurrentInventory(tasks, context.initialInventory);
             IReadOnlyDictionary<Resource, double> positions = Way.CurrentPositions(tasks);
 
             Task successor = tasks.Last();
@@ -75,7 +71,7 @@ namespace Beefs
                     {
                         List<Task> newTasks = new List<Task>(this.tasks);
                         newTasks.Add(solution);
-                        options.Add(new ScanSpot(context, terminalDesire, initialInventory, initialPositions, newTasks));
+                        options.Add(new ScanSpot(context, terminalDesire, newTasks));
                     }
 
                     return options;

@@ -10,16 +10,16 @@ namespace Beefs
     {
         public readonly SortedSet<ScanSpot> spots;
 
-        public SpotScanner(ScanContext context, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
+        public SpotScanner(ScanContext context)
         {
             spots = new SortedSet<ScanSpot>(new ScanSpot.SpotComparer());
-            foreach (ScanSpot spot in DesirableSpots(context, initialInventory, initialPositions))
+            foreach (ScanSpot spot in DesirableSpots(context))
             {
                 spots.Add(spot);
             }
         }
 
-        public static List<ScanSpot> DesirableSpots(ScanContext context, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
+        public static List<ScanSpot> DesirableSpots(ScanContext context)
         {
             List<ScanSpot> terminalSpots = new List<ScanSpot>();
 
@@ -29,7 +29,7 @@ namespace Beefs
                 {
                     if (task.outcomes.ContainsKey(need) && task.outcomes[need] > 0)
                     {
-                        terminalSpots.Add(new ScanSpot(context, need, initialInventory, initialPositions, new List<Task> { task }));
+                        terminalSpots.Add(new ScanSpot(context, need, new List<Task> { task }));
                     }
                 }
             }

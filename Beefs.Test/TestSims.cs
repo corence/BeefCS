@@ -25,17 +25,18 @@ namespace Beefs.games
                 sims.ChopIngredients(1000, 0),
                 sims.BakeFood(10000, 0) // a second oven exists
             };
+
             Dictionary<Resource, double> desires = new Dictionary<Resource, double>
             {
                 { TheSims.cash, 7 }, // i hate spending cash 7 times as much as i hate walking
                 { TheSims.social, 0 }, // don't even care about social,
                 { TheSims.choppedIngredients, 13 } // chopped ingredients are pretty cool (they are the goal of this exercise)
             };
+
             List<Repositioner> repositioners = new List<Repositioner>()
             {
                 new PythagoreanRepositioner(1, new List<Resource>() { TheSims.x, TheSims.z })
             };
-            ScanContext context = new ScanContext(tasks, desires, repositioners);
 
             Dictionary<Resource, double> initialInventory = new Dictionary<Resource, double>
             {
@@ -47,7 +48,8 @@ namespace Beefs.games
                 { TheSims.x, 1000 }
             };
 
-            ScanSpot result = new Scanner().ScanForSpots(context, initialInventory, initialPositions);
+            ScanContext context = new ScanContext(tasks, desires, repositioners, initialInventory, initialPositions);
+            ScanSpot result = new Scanner().ScanForSpots(context);
 
             result.ShouldNotBeNull();
             result.tasks.Count.ShouldBe(2);
@@ -71,6 +73,7 @@ namespace Beefs.games
                 sims.ChopIngredients(1000, 0),
                 sims.BakeFood(10000, 0) // a second oven exists
             };
+
             Dictionary<Resource, double> desires = new Dictionary<Resource, double>
             {
                 { TheSims.cash, 7 }, // i hate spending cash 7 times as much as i hate walking
@@ -78,11 +81,11 @@ namespace Beefs.games
                 { TheSims.choppedIngredients, 13 }, // chopped ingredients are pretty cool,
                 { TheSims.rawIngredients, 9001 } // but OMG raw ingredients are the BUSINESS and are the goal here
             };
+
             List<Repositioner> repositioners = new List<Repositioner>()
             {
                 new PythagoreanRepositioner(1, new List<Resource>() { TheSims.x, TheSims.z })
             };
-            ScanContext context = new ScanContext(tasks, desires, repositioners);
 
             Dictionary<Resource, double> initialInventory = new Dictionary<Resource, double>
             {
@@ -94,7 +97,8 @@ namespace Beefs.games
                 { TheSims.x, 1000 }
             };
 
-            ScanSpot result = new Scanner().ScanForSpots(context, initialInventory, initialPositions);
+            ScanContext context = new ScanContext(tasks, desires, repositioners, initialInventory, initialPositions);
+            ScanSpot result = new Scanner().ScanForSpots(context);
 
             result.ShouldNotBeNull();
             result.tasks.Count.ShouldBe(1);
@@ -118,16 +122,17 @@ namespace Beefs.games
                 sims.ChopIngredients(0, 0),
                 sims.BakeFood(-4, 0) // a second oven exists
             };
+
             Dictionary<Resource, double> desires = new Dictionary<Resource, double>
             {
                 { TheSims.cash, 8 }, // i hate spending cash 8 times as much as i hate walking
                 { TheSims.social, 120 } // but OMG i love being social!
             };
+
             List<Repositioner> repositioners = new List<Repositioner>()
             {
                 new PythagoreanRepositioner(1, new List<Resource>() { TheSims.x, TheSims.z })
             };
-            ScanContext context = new ScanContext(tasks, desires, repositioners);
 
             Dictionary<Resource, double> initialInventory = new Dictionary<Resource, double>
             {
@@ -139,7 +144,8 @@ namespace Beefs.games
                 { TheSims.x, 0 }
             };
 
-            ScanSpot result = new Scanner().ScanForSpots(context, initialInventory, initialPositions);
+            ScanContext context = new ScanContext(tasks, desires, repositioners, initialInventory, initialPositions);
+            ScanSpot result = new Scanner().ScanForSpots(context);
 
             result.ShouldNotBeNull();
             result.tasks.Count.ShouldBe(4);
