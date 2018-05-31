@@ -2,11 +2,8 @@
 
 namespace Beefs
 {
-    public class OptimizationStrategy
+    public interface OptimizationStrategy
     {
-        public Task Optimize(Resource targetResource, IReadOnlyDictionary<Resource, double> positions)
-        {
-
-        }
+        Task Optimize(Task intent, IReadOnlyDictionary<Resource, double> positions);
     }
 }

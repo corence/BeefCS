@@ -10,7 +10,7 @@ namespace Beefs
     {
         public readonly SortedSet<ScanSpot> spots;
 
-        public SpotScanner()
+        public SpotScanner(ScanContext context, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
         {
             spots = new SortedSet<ScanSpot>(new ScanSpot.SpotComparer());
 
@@ -36,7 +36,7 @@ namespace Beefs
             return desirableTasks;
         }
 
-        public ScanSpot Scan(ScanContext context, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
+        public ScanSpot Scan(ScanContext context)
         {
             while (spots.Count > 0)
             {

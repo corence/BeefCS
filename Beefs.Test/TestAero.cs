@@ -68,7 +68,7 @@ namespace Beefs.games
             };
             OptimizingContext ocontext = new OptimizingContext(context, initialInventory, initialPositions);
 
-            OptimizingScanner scanner = new OptimizingScanner(new SpotScanner());
+            OptimizingScanner scanner = new OptimizingScanner(new SpotScanner(context, initialInventory, initialPositions));
 
             scanner.Scan(ocontext);
             scanner.optimizationSolutions.Count.ShouldBe(1);

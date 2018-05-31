@@ -20,7 +20,7 @@ namespace Beefs
 
         public ScanSpot Scan(OptimizingContext context)
         {
-            ScanSpot result = scanner.Scan(context.scanContext, context.initialInventory, context.initialPositions);
+            ScanSpot result = scanner.Scan(context.scanContext);
             TryOptimize(context, scanner.spots);
             return result;
         }
@@ -44,7 +44,7 @@ namespace Beefs
                             {
                                 OptimizationStrategy strategy = ChooseRandomElement(strategies);
                                 IReadOnlyDictionary<Resource, double> positions = SeekToPositions(optimizationTarget.tasks);
-                                Task solution = strategy.Optimize(targetResource, positions);
+                                Task solution = strategy.Optimize(targetTask, positions);
                                 if (solution != null)
                                 {
                                     AddOptimizationSolution(solution);
