@@ -44,7 +44,7 @@ namespace Beefs
                             {
                                 OptimizationStrategy strategy = ChooseRandomElement(strategies);
                                 IReadOnlyDictionary<Resource, double> positions = SeekToPositions(optimizationTarget.tasks);
-                                Task solution = strategy.Optimize(targetTask, positions);
+                                Task solution = strategy.Optimize(optimizationTarget.terminalDesire, targetTask, positions);
                                 if (solution != null)
                                 {
                                     AddOptimizationSolution(solution);

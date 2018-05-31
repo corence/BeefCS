@@ -9,16 +9,18 @@ namespace Beefs
     public class ScanSpot
     {
         public readonly int id;
-        private readonly ScanContext context;
         public static int nextId = 1;
+        private readonly ScanContext context;
+        public readonly Resource terminalDesire;
         public readonly IReadOnlyList<Task> tasks;
         private readonly IReadOnlyDictionary<Resource, double> initialInventory;
         private readonly IReadOnlyDictionary<Resource, double> initialPositions;
 
-        public ScanSpot(ScanContext context, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions, IReadOnlyList<Task> tasks)
+        public ScanSpot(ScanContext context, Resource terminalDesire, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions, IReadOnlyList<Task> tasks)
         {
             this.id = nextId++;
             this.context = context;
+            this.terminalDesire = terminalDesire;
             this.initialInventory = initialInventory;
             this.initialPositions = initialPositions;
             this.tasks = tasks;
@@ -73,7 +75,7 @@ namespace Beefs
                     {
                         List<Task> newTasks = new List<Task>(this.tasks);
                         newTasks.Add(solution);
-                        options.Add(new ScanSpot(context, initialInventory, initialPositions, newTasks));
+                        options.Add(new ScanSpot(context, terminalDesire, initialInventory, initialPositions, newTasks));
                     }
 
                     return options;

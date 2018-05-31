@@ -4,6 +4,6 @@ namespace Beefs
 {
     public interface OptimizationStrategy
     {
-        Task Optimize(Task intent, IReadOnlyDictionary<Resource, double> positions);
+        Task Optimize(Resource terminalDesire, Task intent, IReadOnlyDictionary<Resource, double> positions);
     }
 }

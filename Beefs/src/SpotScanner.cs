@@ -13,27 +13,27 @@ namespace Beefs
         public SpotScanner(ScanContext context, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
         {
             spots = new SortedSet<ScanSpot>(new ScanSpot.SpotComparer());
-
-            foreach (Task task in DesirableTasks(context))
+            foreach (ScanSpot spot in DesirableSpots(context, initialInventory, initialPositions))
             {
-                spots.Add(new ScanSpot(context, initialInventory, initialPositions, new List<Task> { task }));
+                spots.Add(spot);
             }
         }
 
-        private List<Task> DesirableTasks(ScanContext context)
+        public static List<ScanSpot> DesirableSpots(ScanContext context, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
         {
-            List<Task> desirableTasks = new List<Task>();
+            List<ScanSpot> terminalSpots = new List<ScanSpot>();
+
             foreach (Resource need in context.desires.Keys)
             {
                 foreach (Task task in context.tasks)
                 {
                     if (task.outcomes.ContainsKey(need) && task.outcomes[need] > 0)
                     {
-                        desirableTasks.Add(task);
+                        terminalSpots.Add(new ScanSpot(context, need, initialInventory, initialPositions, new List<Task> { task }));
                     }
                 }
             }
-            return desirableTasks;
+            return terminalSpots;
         }
 
         public ScanSpot Scan(ScanContext context)

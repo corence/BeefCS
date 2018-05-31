@@ -32,9 +32,9 @@ namespace Beefs
         public ScanSpot ScanForSpots(ScanContext context, IReadOnlyDictionary<Resource, double> initialInventory, IReadOnlyDictionary<Resource, double> initialPositions)
         {
             SortedSet<ScanSpot> spots = new SortedSet<ScanSpot>(new ScanSpot.SpotComparer());
-            foreach (Task task in DesirableTasks(context))
+            foreach (ScanSpot spot in SpotScanner.DesirableSpots(context, initialInventory, initialPositions))
             {
-                spots.Add(new ScanSpot(context, initialInventory, initialPositions, new List<Task> { task }));
+                spots.Add(spot);
             }
 
             while (spots.Count > 0)

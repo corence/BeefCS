@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Shouldly;
 
-namespace Beefs.games
+namespace Beefs.games.aero
 {
     [TestFixture]
     public class TestAero
@@ -46,25 +46,25 @@ namespace Beefs.games
             };
             Dictionary<Resource, double> desires = new Dictionary<Resource, double>
             {
-                { aero.log, 1 },
-                { aero.spear, 5 },
-                { aero.hatchet, 3 },
+                { Aero.log, 1 },
+                { Aero.spear, 5 },
+                { Aero.hatchet, 3 },
             };
             List<Repositioner> repositioners = new List<Repositioner>()
             {
-                new PythagoreanRepositioner(1, new List<Resource>() { aero.x, aero.z })
+                new PythagoreanRepositioner(1, new List<Resource>() { Aero.x, Aero.z })
             };
             ScanContext context = new ScanContext(tasks, desires, repositioners);
 
             Dictionary<Resource, double> initialInventory = new Dictionary<Resource, double>
             {
-                { aero.hatchet, 1 },
+                { Aero.hatchet, 1 },
             };
 
             Dictionary<Resource, double> initialPositions = new Dictionary<Resource, double>
             {
-                { aero.x, 0 },
-                { aero.z, 0 },
+                { Aero.x, 0 },
+                { Aero.z, 0 },
             };
             OptimizingContext ocontext = new OptimizingContext(context, initialInventory, initialPositions);
 
