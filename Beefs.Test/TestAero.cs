@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Shouldly;
+using Beefs.util;
 
 namespace Beefs.games.aero
 {
@@ -41,6 +42,7 @@ namespace Beefs.games.aero
             List<Task> tasks = new List<Task>
             {
                 aero.ChopTree(9, 9),
+                aero.MineGold(88, 88),
                 aero.CraftSpear(44, 44),
                 aero.FortifyConstruction(7, 22, 22),
             };
@@ -50,6 +52,7 @@ namespace Beefs.games.aero
                 { Aero.log, 1 },
                 { Aero.spear, 5 },
                 { Aero.hatchet, 3 },
+                { Aero.gold, 9001 }
             };
 
             List<Repositioner> repositioners = new List<Repositioner>()
@@ -68,15 +71,19 @@ namespace Beefs.games.aero
                 { Aero.z, 0 },
             };
             ScanContext context = new ScanContext(tasks, desires, repositioners, initialInventory, initialPositions);
-            OptimizingContext ocontext = new OptimizingContext(context);
 
-            OptimizingScanner scanner = new OptimizingScanner(new SpotScanner(context));
+            Dictionary<Resource, List<OptimizationStrategy>> strategies = new Dictionary<Resource, List<OptimizationStrategy>>();
+            strategies[Aero.pickaxe] = new List<OptimizationStrategy> { new Aero.OptimizePickaxeProduction() };
+
+            OptimizingContext ocontext = new OptimizingContext(strategies, context);
+
+            OptimizingScanner scanner = new OptimizingScanner(new LastChooser(), new SpotScanner(context));
 
             scanner.Scan(ocontext);
             scanner.optimizationSolutions.Count.ShouldBe(1);
 
             scanner.Scan(ocontext);
-            scanner.optimizationSolutions.Count.ShouldBe(2); // hmm really? not if the cluster gets augmented
+            scanner.optimizationSolutions.Count.ShouldBe(1); // the two optimizations merge into one
         }
 
         /*

@@ -9,13 +9,16 @@ namespace Beefs
     public class SpotScanner
     {
         public readonly SortedSet<ScanSpot> spots;
+        public readonly ICollection<ScanSpot> allVisitedSpots;
 
         public SpotScanner(ScanContext context)
         {
             spots = new SortedSet<ScanSpot>(new ScanSpot.SpotComparer());
+            allVisitedSpots = new List<ScanSpot>();
             foreach (ScanSpot spot in DesirableSpots(context))
             {
                 spots.Add(spot);
+                allVisitedSpots.Add(spot);
             }
         }
 
@@ -53,6 +56,7 @@ namespace Beefs
                     foreach (var nextSpot in nextSpots)
                     {
                         spots.Add(nextSpot);
+                        allVisitedSpots.Add(nextSpot);
                     }
                 }
             }

@@ -23,37 +23,22 @@ namespace Beefs
             this.possibilities = possibilities;
         }
 
-        public static OptimizingTask Merge(OptimizingTask a, OptimizingTask b)
+        public static OptimizingTask Merge(OptimizingTask a, OptimizingTask b, Chooser chooser)
         {
             if (a.name != b.name)
             {
                 throw new Exception("can't merge these optimizing tasks");
             }
 
-            Dictionary<string, TaskCluster> mergedPossibilities = DictionaryMerge.Merge<string, TaskCluster>(
+            Dictionary<string, TaskCluster> mergedPossibilities = DictionaryMerge.Merge(
                 a.possibilities,
                 b.possibilities,
                 DictionaryMerge.Identity<TaskCluster>(),
-                (x, y) => new TaskCluster(x, y),
+                (x, y) => new TaskCluster(x, y, chooser),
                 DictionaryMerge.Identity<TaskCluster>());
 
-            Dictionary<string, TaskCluster> mergedPossibilities = new Dictionary<string, TaskCluster>();
-            foreach (var p in a.possibilities)
-            {
-                mergedPossibilities[p.Key] = p.Value;
-            }
-
-            foreach (var p in b.possibilities)
-            {
-                if (mergedPossibilities.ContainsKey(p.Key))
-                {
-                    mergedPossibilities[p.Key] = new TaskCluster(mergedPossibilities[p.Key], p.Value, random);
-                }
-                else
-                {
-                    mergedPossibilities[p.Key] = p.Value;
-                }
-            }
+            Task implementation = chooser.Choose(a.implementation, b.implementation);
+            return new OptimizingTask(a.implementation, mergedPossibilities);
         }
 
         public int NumPossibilities()

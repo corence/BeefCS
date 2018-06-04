@@ -166,6 +166,8 @@
     <Compile Include="src\Task.cs" />
     <Compile Include="src\games\TheSims.cs" />
     <Compile Include="src\TaskCluster.cs" />
+    <Compile Include="src\util\Chooser.cs" />
+    <Compile Include="src\util\DictionaryMerge.cs" />
     <Compile Include="test\TestScanner.cs" />
   </ItemGroup>
   <ItemGroup>

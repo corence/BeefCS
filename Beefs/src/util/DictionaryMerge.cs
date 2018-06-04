@@ -8,7 +8,7 @@ namespace Beefs.util
 {
     public class DictionaryMerge
     {
-        public Dictionary<K, V> Merge<K, V>(
+        public static Dictionary<K, V> Merge<K, V>(
             IReadOnlyDictionary<K, V> lhs,
             IReadOnlyDictionary<K, V> rhs,
             Func<V, V> lhsFunc,
@@ -18,7 +18,7 @@ namespace Beefs.util
             return Merge(lhs, rhs.AsEnumerable<KeyValuePair<K, V>>().GetEnumerator(), lhsFunc, mergeFunc, rhsFunc);
         }
 
-        public Dictionary<K, V> Merge<K, V>(
+        public static Dictionary<K, V> Merge<K, V>(
             IReadOnlyDictionary<K, V> lhs,
             IEnumerator<KeyValuePair<K, V>> rhs,
             Func<V, V> lhsFunc,

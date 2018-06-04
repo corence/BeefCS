@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Beefs.util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,14 +20,14 @@ namespace Beefs
             count = 1;
         }
 
-        public TaskCluster(TaskCluster cluster, Task task, Random random)
-        : this(cluster, new TaskCluster(task), random)
+        public TaskCluster(TaskCluster cluster, Task task, Chooser chooser)
+        : this(cluster, new TaskCluster(task), chooser)
         {
         }
 
-        public TaskCluster(TaskCluster cluster1, TaskCluster cluster2, Random random)
+        public TaskCluster(TaskCluster cluster1, TaskCluster cluster2, Chooser chooser)
         {
-            sample = ChooseSample(cluster1, cluster2, random);
+            sample = chooser.Choose(cluster1.sample, cluster2.sample);
             positions = BlendPositions(cluster1, cluster2);
             count = cluster1.count + cluster2.count;
         }

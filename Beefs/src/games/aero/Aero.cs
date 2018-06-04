@@ -9,6 +9,7 @@ namespace Beefs.games.aero
     // A made-up game kinda like war3
     public class Aero
     {
+        public static readonly Resource gold = new Resource("gold");
         public static readonly Resource log = new Resource("log");
         public static readonly Resource tree = new Resource("tree");
         public static readonly Resource spear = new Resource("spear");
@@ -88,8 +89,7 @@ namespace Beefs.games.aero
         {
             Dictionary<Resource, double> needs = new Dictionary<Resource, double>
             {
-                { hatchet, 1 },
-                { tree, 1 }
+                { hatchet, 1 }
             };
             Dictionary<Resource, double> positions = new Dictionary<Resource, double>
             {
@@ -99,10 +99,28 @@ namespace Beefs.games.aero
             Dictionary<Resource, double> outcomes = new Dictionary<Resource, double>
             {
                 { log, 1 },
-                { tree, -1 },
                 { delay, 7 }
             };
-            return new Task("serve dinner", needs, positions, outcomes);
+            return new Task("chop tree", needs, positions, outcomes);
+        }
+
+        public Task MineGold(double x, double z)
+        {
+            Dictionary<Resource, double> needs = new Dictionary<Resource, double>
+            {
+                { pickaxe, 1 }
+            };
+            Dictionary<Resource, double> positions = new Dictionary<Resource, double>
+            {
+                { Aero.x, x },
+                { Aero.z, z }
+            };
+            Dictionary<Resource, double> outcomes = new Dictionary<Resource, double>
+            {
+                { gold, 1 },
+                { delay, 4 }
+            };
+            return new Task("mine gold", needs, positions, outcomes);
         }
 
         public Task FortifyConstruction(long itemId, double x, double z)
@@ -120,7 +138,7 @@ namespace Beefs.games.aero
             {
                 { log, -1 },
             };
-            return new Task("serve dinner", needs, positions, outcomes);
+            return new Task("fortify construction", needs, positions, outcomes);
         }
     }
 }

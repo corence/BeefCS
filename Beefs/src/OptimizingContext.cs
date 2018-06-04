@@ -11,8 +11,9 @@ namespace Beefs
         public readonly ScanContext scanContext;
         public readonly IReadOnlyDictionary<Resource, List<OptimizationStrategy>> optimizationStrategies;
 
-        public OptimizingContext(ScanContext context)
+        public OptimizingContext(IReadOnlyDictionary<Resource, List<OptimizationStrategy>> optimizationStrategies, ScanContext context)
         {
+            this.optimizationStrategies = optimizationStrategies;
             this.scanContext = context;
         }
     }
