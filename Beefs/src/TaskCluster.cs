@@ -69,5 +69,15 @@ namespace Beefs
 
             return result;
         }
+
+        public IReadOnlyDictionary<Resource, double> Outcomes()
+        {
+            Dictionary<Resource, double> outcomes = new Dictionary<Resource, double>();
+            foreach (var entry in sample.outcomes)
+            {
+                outcomes[entry.Key] = entry.Value * count;
+            }
+            return outcomes;
+        }
     }
 }

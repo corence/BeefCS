@@ -150,6 +150,7 @@
     <Compile Include="src\OptimizationStrategy.cs" />
     <Compile Include="src\OptimizingContext.cs" />
     <Compile Include="src\OptimizingScanner.cs" />
+    <Compile Include="src\OptimizingTask.cs" />
     <Compile Include="src\SpotScanner.cs" />
     <Compile Include="src\ScanSpot.cs" />
     <Compile Include="src\Resource.cs" />
