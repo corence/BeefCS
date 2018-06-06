@@ -160,13 +160,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\ScanNode.cs" />
-    <Compile Include="src\ScanPath.cs" />
     <Compile Include="src\ScanWay.cs" />
     <Compile Include="src\Shepherd.cs" />
     <Compile Include="src\Task.cs" />
     <Compile Include="src\games\TheSims.cs" />
     <Compile Include="src\TaskCluster.cs" />
     <Compile Include="src\util\Chooser.cs" />
+    <Compile Include="src\util\CombinedEnumerator.cs" />
     <Compile Include="src\util\DictionaryMerge.cs" />
     <Compile Include="test\TestScanner.cs" />
   </ItemGroup>

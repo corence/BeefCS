@@ -22,37 +22,5 @@ namespace Beefs
             this.initialInventory = initialInventory;
             this.initialPositions = initialPositions;
         }
-
-        public double profitOfTask(Task task, ScanNode successor)
-        {
-            return outcomeProfits(task.outcomes) - repositioningCost(successor.positions, task.positions);
-        }
-
-        public double outcomeProfits(IReadOnlyDictionary<Resource, double> outcomes)
-        {
-            double profit = 0;
-
-            foreach (var outcome in outcomes)
-            {
-                if (desires.ContainsKey(outcome.Key))
-                {
-                    profit += desires[outcome.Key] * outcome.Value;
-                }
-            }
-
-            return profit;
-        }
-
-        public double repositioningCost(IReadOnlyDictionary<Resource, double> oldPositions, IReadOnlyDictionary<Resource, double> newPositions)
-        {
-            double cost = 0;
-
-            foreach (var repositioner in repositioners)
-            {
-                cost += repositioner.costToMove(oldPositions, newPositions);
-            }
-            
-            return cost;
-        }
     }
 }

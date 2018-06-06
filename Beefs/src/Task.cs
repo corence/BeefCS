@@ -23,5 +23,37 @@ namespace Beefs
             this.positions = positions;
             this.outcomes = outcomes;
         }
+
+        public double OutcomeProfits(ScanContext context)
+        {
+            double profit = 0;
+
+            foreach (var outcome in outcomes)
+            {
+                if (context.desires.ContainsKey(outcome.Key))
+                {
+                    profit += context.desires[outcome.Key] * outcome.Value;
+                }
+            }
+
+            return profit;
+        }
+
+        public double RepositioningCost(ScanContext context, IReadOnlyDictionary<Resource, double> nextPositions)
+        {
+            double cost = 0;
+
+            foreach (var repositioner in context.repositioners)
+            {
+                cost += repositioner.costToMove(positions, nextPositions);
+            }
+
+            return cost;
+        }
+
+        public double Profit(ScanContext context, IReadOnlyDictionary<Resource, double> nextPositions)
+        {
+            return OutcomeProfits(context) - RepositioningCost(context, nextPositions);
+        }
     }
 }

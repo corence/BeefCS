@@ -11,7 +11,7 @@ namespace Beefs
     public class OptimizingTask : Task
     {
         public readonly Task implementation;
-        public readonly IReadOnlyDictionary<string, TaskCluster> possibilities;
+        public readonly IReadOnlyDictionary<string, TaskCluster> possibilities; // all of the things that become possible when this gets implemented
 
         public OptimizingTask(Task implementation, IReadOnlyDictionary<string, TaskCluster> possibilities)
             : base("optimize with " + implementation.name,
@@ -60,56 +60,6 @@ namespace Beefs
                 result.Add(entry.Key, entry.Value);
             }
             return result;
-        }
-
-        public class CombinedEnumerator<T> : IEnumerator<T>
-        {
-            public readonly IEnumerator<IEnumerator<T>> enumeratorEnumerator;
-
-            public CombinedEnumerator(IEnumerator<IEnumerator<T>> enumeratorEnumerator)
-            {
-                this.enumeratorEnumerator = enumeratorEnumerator;
-            }
-
-            public CombinedEnumerator(IEnumerator<T> a, IEnumerator<T> b)
-            {
-                enumeratorEnumerator = new List<IEnumerator<T>> { a, b }.GetEnumerator();
-            }
-
-            public T Current => enumeratorEnumerator.Current.Current;
-
-            object IEnumerator.Current => Current;
-
-            public void Dispose()
-            {
-                do
-                {
-                    enumeratorEnumerator.Current.Dispose();
-                } while (enumeratorEnumerator.MoveNext());
-
-                enumeratorEnumerator.Dispose();
-            }
-
-            public bool MoveNext()
-            {
-                while (true)
-                {
-                    if(enumeratorEnumerator.Current.MoveNext())
-                    {
-                        return true;
-                    }
-
-                    if (!enumeratorEnumerator.MoveNext())
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            public void Reset()
-            {
-                throw new NotImplementedException();
-            }
         }
 
         public static IReadOnlyDictionary<Resource, double> CombineClusterOutcomes(IEnumerable<TaskCluster> clusters)

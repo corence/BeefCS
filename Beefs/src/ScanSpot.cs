@@ -44,8 +44,8 @@ namespace Beefs
             for (int i = tasks.Count - 1; i >= 0; --i)
             {
                 Task task = tasks[i];
-                profit += context.outcomeProfits(task.outcomes);
-                profit -= context.repositioningCost(task.positions, positions);
+                profit += task.OutcomeProfits(context);
+                profit -= task.RepositioningCost(context, positions);
                 positions = Way.mergePositions(positions, task.positions);
             }
 
