@@ -168,6 +168,7 @@
     <Compile Include="src\util\Chooser.cs" />
     <Compile Include="src\util\CombinedEnumerator.cs" />
     <Compile Include="src\util\DictionaryMerge.cs" />
+    <Compile Include="src\util\RTree.cs" />
     <Compile Include="test\TestScanner.cs" />
   </ItemGroup>
   <ItemGroup>
