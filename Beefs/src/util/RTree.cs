@@ -8,7 +8,6 @@ namespace Beefs.util
 {
     public interface IVolume<K>
     {
-        bool Contains(K volume);
         bool Intersects(K volume);
         K Extend(K volume);
     }
