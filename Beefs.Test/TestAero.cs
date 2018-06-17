@@ -45,6 +45,7 @@ namespace Beefs.games.aero
                 aero.MineGold(88, 88),
                 aero.CraftSpear(44, 44),
                 aero.FortifyConstruction(7, 22, 22),
+                aero.MineGold(996688, 88),
             };
 
             Dictionary<Resource, double> desires = new Dictionary<Resource, double>
@@ -65,25 +66,103 @@ namespace Beefs.games.aero
                 { Aero.hatchet, 1 },
             };
 
-            Dictionary<Resource, double> initialPositions = new Dictionary<Resource, double>
+            Dictionary<Resource, double> initialPositions1 = new Dictionary<Resource, double>
             {
                 { Aero.x, 0 },
                 { Aero.z, 0 },
             };
-            ScanContext context = new ScanContext(tasks, desires, repositioners, initialInventory, initialPositions);
+            ScanContext context1 = new ScanContext(tasks, desires, repositioners, initialInventory, initialPositions1);
+
+            Dictionary<Resource, double> initialPositions2 = new Dictionary<Resource, double>
+            {
+                { Aero.x, 100000 },
+                { Aero.z, 0 },
+            };
+            ScanContext context2 = new ScanContext(tasks, desires, repositioners, initialInventory, initialPositions2);
 
             Dictionary<Resource, List<OptimizationStrategy>> strategies = new Dictionary<Resource, List<OptimizationStrategy>>();
             strategies[Aero.pickaxe] = new List<OptimizationStrategy> { new Aero.OptimizePickaxeProduction() };
 
-            OptimizingContext ocontext = new OptimizingContext(strategies, context);
+            OptimizingContext ocontext1 = new OptimizingContext(strategies, context1);
+            OptimizingContext ocontext2 = new OptimizingContext(strategies, context2);
 
-            OptimizingScanner scanner = new OptimizingScanner(new LastChooser(), new SpotScanner(context));
+            OptimizingScanner scanner = new OptimizingScanner(new LastChooser(), new SpotScanner(context1));
 
-            scanner.Scan(ocontext);
+            scanner.Scan(ocontext1);
             scanner.optimizationSolutions.Count.ShouldBe(1);
 
-            scanner.Scan(ocontext);
-            scanner.optimizationSolutions.Count.ShouldBe(1); // the two optimizations merge into one
+            scanner.Scan(ocontext2);
+            scanner.optimizationSolutions.Count.ShouldBe(2); // the two optimizations should not merge
+        }
+
+        /*
+         * Not only does the optimizer need to accumulate tasks -- it also needs to combine similar ones that are
+         * close to each other.
+         * 
+         * Two optimisations should be consolidated if:
+         *  - the net benefit of A outweighs the net benefit of B plus the cost of moving from B to A
+         *  - both tasks have the same name
+         * 
+         */
+        [Test]
+        public void testOptimiserConsolidates()
+        {
+            Aero aero = new Aero();
+
+            List<Task> tasks = new List<Task>
+            {
+                aero.ChopTree(9, 9),
+                aero.MineGold(88, 88),
+                aero.CraftSpear(44, 44),
+                aero.FortifyConstruction(7, 22, 22),
+                aero.MineGold(90, 88),
+            };
+
+            Dictionary<Resource, double> desires = new Dictionary<Resource, double>
+            {
+                { Aero.log, 1 },
+                { Aero.spear, 5 },
+                { Aero.hatchet, 3 },
+                { Aero.gold, 9001 }
+            };
+
+            List<Repositioner> repositioners = new List<Repositioner>()
+            {
+                new PythagoreanRepositioner(1, new List<Resource>() { Aero.x, Aero.z })
+            };
+
+            Dictionary<Resource, double> initialInventory = new Dictionary<Resource, double>
+            {
+                { Aero.hatchet, 1 },
+            };
+
+            Dictionary<Resource, double> initialPositions1 = new Dictionary<Resource, double>
+            {
+                { Aero.x, 0 },
+                { Aero.z, 0 },
+            };
+            ScanContext context1 = new ScanContext(tasks, desires, repositioners, initialInventory, initialPositions1);
+
+            Dictionary<Resource, double> initialPositions2 = new Dictionary<Resource, double>
+            {
+                { Aero.x, 92 },
+                { Aero.z, 0 },
+            };
+            ScanContext context2 = new ScanContext(tasks, desires, repositioners, initialInventory, initialPositions2);
+
+            Dictionary<Resource, List<OptimizationStrategy>> strategies = new Dictionary<Resource, List<OptimizationStrategy>>();
+            strategies[Aero.pickaxe] = new List<OptimizationStrategy> { new Aero.OptimizePickaxeProduction() };
+
+            OptimizingContext ocontext1 = new OptimizingContext(strategies, context1);
+            OptimizingContext ocontext2 = new OptimizingContext(strategies, context2);
+
+            OptimizingScanner scanner = new OptimizingScanner(new LastChooser(), new SpotScanner(context1));
+
+            scanner.Scan(ocontext1);
+            scanner.optimizationSolutions.Count.ShouldBe(1);
+
+            scanner.Scan(ocontext2);
+            scanner.optimizationSolutions.Count.ShouldBe(1); // the two optimizations merge into one, because they are close together
         }
 
         /*
